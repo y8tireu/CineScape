@@ -6,12 +6,12 @@
   },
   {
     "name": "Movie 2",
-    "thumbnail": "movie2.jpg",
+    "thumbnail": "movie.jpg",
     "file": "movie1.mp4"
   },
   {
     "name": "Movie 3",
-    "thumbnail": "movie3.jpg",
+    "thumbnail": "movie.jpg",
     "file": "movie2.mp4"
   }
 ]
