@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Movie 1",
+    "thumbnail": "PythonLogo.jpg",
+    "file": "movie1.mp4"
+  },
+  {
+    "name": "Movie 2",
+    "thumbnail": "movie2.jpg",
+    "file": "movie2.mp4"
+  },
+  {
+    "name": "Movie 3",
+    "thumbnail": "movie3.jpg",
+    "file": "movie3.mp4"
+  }
+]
