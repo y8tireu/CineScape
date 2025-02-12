@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CineScape</title>
   <style>
-    /* Reset & Base Styles */
+    /* Reset and Base Styles */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -17,8 +17,8 @@
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       overflow-x: hidden;
     }
-    
-    /* Fixed Navigation Bar */
+
+    /* Fixed Navigation Header */
     header {
       position: fixed;
       top: 0;
@@ -36,6 +36,7 @@
       font-size: 28px;
       font-weight: bold;
       letter-spacing: 2px;
+      cursor: pointer;
     }
     header nav ul {
       display: flex;
@@ -63,19 +64,19 @@
     header .icons div:hover {
       color: #e5e5e5;
     }
-    
-    /* Main Content Container */
+
+    /* Main Container */
     .container {
-      margin-top: 70px; /* Space for header */
+      margin-top: 70px; /* Leaves space for header */
       padding: 20px;
     }
     .section-title {
       font-size: 22px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       padding-left: 10px;
     }
-    
-    /* Movie Row Styles */
+
+    /* Movie Row (Carousel) */
     .movie-row {
       display: flex;
       overflow-x: auto;
@@ -85,8 +86,8 @@
     .movie-row::-webkit-scrollbar {
       display: none;
     }
-    
-    /* Movie Card Styling */
+
+    /* Movie Card Styles */
     .movie-card {
       position: relative;
       flex: 0 0 auto;
@@ -100,14 +101,13 @@
     .movie-card img {
       width: 100%;
       display: block;
-      border-radius: 5px;
     }
     .movie-card:hover {
       transform: scale(1.1);
       opacity: 0.8;
     }
-    
-    /* Title Overlay on Movie Card */
+
+    /* Movie Title Overlay */
     .movie-title {
       position: absolute;
       bottom: 0;
@@ -119,65 +119,73 @@
       color: #fff;
       box-sizing: border-box;
     }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      header nav ul li {
+        margin: 0 10px;
+      }
+      .movie-card {
+        width: 150px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
+  <!-- Navigation Header -->
   <header>
-    <div class="logo">NETFLIX</div>
+    <div class="logo" onclick="location.reload();">CineScape</div>
     <nav>
       <ul>
         <li>Home</li>
         <li>TV Shows</li>
         <li>Movies</li>
-        <li>Recently Added</li>
+        <li>New &amp; Popular</li>
         <li>My List</li>
       </ul>
     </nav>
     <div class="icons">
-      <div>🔍</div>
-      <div>🔔</div>
-      <div>👤</div>
+      <div title="Search">🔍</div>
+      <div title="Notifications">🔔</div>
+      <div title="Account">👤</div>
     </div>
   </header>
-  
-  <!-- Main Content -->
+
+  <!-- Main Content Container -->
   <div class="container">
-    <div class="section">
-      <h2 class="section-title">Popular on Netflix</h2>
-      <div class="movie-row" id="movieRow">
-        <!-- Movie cards will be injected here -->
-      </div>
+    <h2 class="section-title">Popular on CineScape</h2>
+    <div class="movie-row" id="movieRow">
+      <!-- Movie cards are dynamically injected here -->
     </div>
   </div>
-  
-  <!-- JavaScript to load movies and create cards -->
+
+  <!-- JavaScript: Load Movies and Create Cards -->
   <script>
     fetch('movies.json')
       .then(response => response.json())
       .then(movies => {
         const movieRow = document.getElementById('movieRow');
         movies.forEach(movie => {
-          // Create movie card element
+          // Create the movie card element
           const card = document.createElement('div');
           card.classList.add('movie-card');
-          
-          // Redirect to the local MP4 file when clicked
+
+          // When clicked, redirect to the local MP4 file
           card.addEventListener('click', () => {
             window.location.href = movie.file;
           });
-          
-          // Create and configure thumbnail image element
+
+          // Create the thumbnail image (stored in the same directory)
           const img = document.createElement('img');
-          img.src = movie.thumbnail;  // Assumes thumbnail is in the same directory
+          img.src = movie.thumbnail;
           img.alt = movie.name;
-          
-          // Create overlay to display movie title
+
+          // Create the title overlay
           const titleOverlay = document.createElement('div');
           titleOverlay.classList.add('movie-title');
           titleOverlay.textContent = movie.name;
-          
-          // Append image and overlay to the movie card
+
+          // Append image and title overlay to the movie card
           card.appendChild(img);
           card.appendChild(titleOverlay);
           movieRow.appendChild(card);
