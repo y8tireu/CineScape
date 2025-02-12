@@ -18,31 +18,69 @@
       overflow-x: hidden;
     }
     
-    /* Fixed Header */
+    /* Fixed Navigation Bar */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 20px;
+      padding: 10px 30px;
+      background: rgba(20, 20, 20, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       z-index: 1000;
     }
-    header h1 {
-      font-size: 24px;
+    header .logo {
+      color: #e50914;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    header nav ul {
+      display: flex;
+      list-style: none;
+    }
+    header nav ul li {
+      margin: 0 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    header nav ul li:hover {
+      color: #e5e5e5;
+    }
+    header .icons {
+      display: flex;
+      align-items: center;
+    }
+    header .icons div {
+      margin-left: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    header .icons div:hover {
+      color: #e5e5e5;
     }
     
-    /* Main container */
+    /* Main Content Container */
     .container {
-      margin-top: 80px; /* space for header */
+      margin-top: 70px; /* Space for header */
       padding: 20px;
     }
+    .section-title {
+      font-size: 22px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+    }
     
-    /* Movie Row (Carousel) */
+    /* Movie Row Styles */
     .movie-row {
       display: flex;
       overflow-x: auto;
       padding-bottom: 20px;
+      scroll-behavior: smooth;
     }
     .movie-row::-webkit-scrollbar {
       display: none;
@@ -50,24 +88,26 @@
     
     /* Movie Card Styling */
     .movie-card {
+      position: relative;
       flex: 0 0 auto;
       width: 200px;
       margin-right: 15px;
       border-radius: 5px;
       overflow: hidden;
-      position: relative;
-      transition: transform 0.3s;
+      transition: transform 0.3s, opacity 0.3s;
       cursor: pointer;
     }
     .movie-card img {
       width: 100%;
       display: block;
+      border-radius: 5px;
     }
     .movie-card:hover {
       transform: scale(1.1);
+      opacity: 0.8;
     }
     
-    /* Title overlay on the movie card */
+    /* Title Overlay on Movie Card */
     .movie-title {
       position: absolute;
       bottom: 0;
@@ -77,47 +117,67 @@
       background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
       font-size: 16px;
       color: #fff;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
+  <!-- Navigation Bar -->
   <header>
-    <h1>My Movie App</h1>
+    <div class="logo">NETFLIX</div>
+    <nav>
+      <ul>
+        <li>Home</li>
+        <li>TV Shows</li>
+        <li>Movies</li>
+        <li>Recently Added</li>
+        <li>My List</li>
+      </ul>
+    </nav>
+    <div class="icons">
+      <div>🔍</div>
+      <div>🔔</div>
+      <div>👤</div>
+    </div>
   </header>
   
+  <!-- Main Content -->
   <div class="container">
-    <section class="movie-row" id="movieRow">
-      <!-- Movie cards will be injected here -->
-    </section>
+    <div class="section">
+      <h2 class="section-title">Popular on Netflix</h2>
+      <div class="movie-row" id="movieRow">
+        <!-- Movie cards will be injected here -->
+      </div>
+    </div>
   </div>
   
+  <!-- JavaScript to load movies and create cards -->
   <script>
-    // Load movies from the movies.json file
     fetch('movies.json')
       .then(response => response.json())
       .then(movies => {
         const movieRow = document.getElementById('movieRow');
         movies.forEach(movie => {
-          // Create a movie card
+          // Create movie card element
           const card = document.createElement('div');
           card.classList.add('movie-card');
           
-          // Redirect to the MP4 file when the card is clicked
+          // Redirect to the local MP4 file when clicked
           card.addEventListener('click', () => {
             window.location.href = movie.file;
           });
           
-          // Create the thumbnail image (assumed to be in the same directory)
+          // Create and configure thumbnail image element
           const img = document.createElement('img');
-          img.src = movie.thumbnail;
+          img.src = movie.thumbnail;  // Assumes thumbnail is in the same directory
           img.alt = movie.name;
           
-          // Create the title overlay
+          // Create overlay to display movie title
           const titleOverlay = document.createElement('div');
           titleOverlay.classList.add('movie-title');
           titleOverlay.textContent = movie.name;
           
-          // Append the image and title overlay to the card
+          // Append image and overlay to the movie card
           card.appendChild(img);
           card.appendChild(titleOverlay);
           movieRow.appendChild(card);
@@ -127,4 +187,3 @@
   </script>
 </body>
 </html>
-
